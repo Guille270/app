@@ -1,0 +1,48 @@
+/* Hasta 320px no se vera */
+
+@media screen and (max-height: 480px) {
+
+
+    tr.zebra {
+        height: 6.4vh;
+
+    }
+}
+
+@media screen and (min-height: 481px) and (max-height: 640px) {
+
+
+    tr.zebra {
+        height: 6.9vh;
+
+    }
+}
+
+@media screen and (min-height: 650px) and (max-height: 1000px) {
+
+
+    tr.zebra {
+        height: 7.4vh;
+
+    }
+}
+
+@media screen and (min-height: 1000px) {
+    tr.zebra {
+        height: 8vh;
+
+    }
+}
+
+tr:nth-child(even).zebra {
+    background-color: #5abe6e59;
+}
+
+tr:active,
+tr:nth-child(even).zebra:active {
+    background-color: red;
+}
+
+.tasaciones {
+text-align: center;
+}

@@ -1,0 +1,82 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle right>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <div id="adminFiles">
+        <div>
+            <h5><u>Nombre de las imagenes para la App</u></h5>
+            <h6><strong>portada.[extensión]</strong><i> Ejemplo: portada.jpg</i> es la imagen que se vera de la
+                miniatura del vehículo y la primera imagen que se vera en el Slider</h6>
+            <h6><strong>app[ElNombreQueDeseemos].[extensión]</strong><i> Ejemplo: app1.jpg</i> son las imágenes que
+                se verán en el Slider despues de la portada</h6>
+            <br>
+            <h6><strong>Las imágenes que se suban por aquí tendrán cambios en su tamaño y calidad para adaptarlo a
+                    la App</strong></h6>
+        </div>
+
+        <div style="border:1px solid black; margin-top:1%">
+            <div class="toolbarAdminImg">
+
+                <div class="toolbarAdd">
+
+                    <!-- Trigger/Open The Modal -->
+                    <button ion-button (click)="openModal(this.uploadModal.modalElement)" id="uploadBtn">
+                        <ion-icon icon="fa-file"></ion-icon> Subir Archivo
+                    </button>
+
+
+                </div>
+            </div>
+
+            <div>
+                <ion-grid>
+                    <ion-row>
+
+                        <ng-container *ngFor="let filename of filenames">
+                            <ion-col col-6>
+                                <div>
+                                    <img [src]="buildImgUrl(filename)" (click)="selectFile(filename)">
+                                    <span>{{filename}}</span>
+                                </div>
+                            </ion-col>
+                        </ng-container>
+
+                    </ion-row>
+                </ion-grid>
+            </div>
+
+
+        </div>
+
+
+        <!-- The IMG Modal -->
+        <div id="imgModal" class="modal imgModal">
+            <span class="imgClose" id="imgClose" (click)="closeModal(this.viewImageModal.modalElement)">&times;</span>
+            <img [src]="buildImgUrl(this.selectedFile)" class="imgModal-content" id="img01">
+            <div id="imgCaption"></div>
+        </div>
+
+        <!-- The Upload Modal -->
+        <div id="uploadModal" class="modal uploadModal">
+
+            <!-- Modal content -->
+            <div class="uploadModal-content">
+                <span (click)="closeModal(this.uploadModal.modalElement)" class="uploadClose">&times;</span>
+                <input type="file" id="file" (change)="getFileFromInput($event.target.files)">
+                <div class="add">
+                    <button ion-button (click)="handleUpload()" class="btn btn-success">
+                        <ion-icon icon="fa-plus-circle"></ion-icon> Subir
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</ion-content>

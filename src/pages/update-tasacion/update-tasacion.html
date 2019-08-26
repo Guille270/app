@@ -1,0 +1,130 @@
+<ion-header>
+        <ion-navbar>
+          <button ion-button menuToggle right>
+            <ion-icon  name="menu"></ion-icon>
+          </button>
+        </ion-navbar>
+      </ion-header>
+
+  <ion-content>
+      <div id="updateTasacion">
+          <main>
+              <!-- Tab links -->
+
+              <div class="tabA">
+                  <button id="vehiculoTab" class="tablinks"  (click)="openTab('vehiculoTab', 'vehiculo')">Vehiculo</button>
+                  <button id="tasacionTab" class="tablinks" (click)="openTab('tasacionTab', 'tasacion')">Tasacion</button>
+              </div>
+
+
+              <section id="vehiculo" class="tabcontent">
+                  <div class="form-container">
+                      <label class="form-label" for="Matricula">Matricula:</label>
+                      <input id="Matricula" class="text-input" (change)="show()" [(ngModel)]="tasacion.matricula" type="text" required>
+                  </div>
+                  <div class="form-container">
+                      <label class="form-label" for="Marca">Marca:</label>
+                      <select id="updateMarca"  [(ngModel)]="tasacion.id_marca">
+                          <option *ngFor="let marca of marcas" value="{{marca.id_marca}}">{{marca.nombre_marca}}</option>
+                      </select>
+                  </div>
+                  <div class="form-container">
+                      <label class="form-label" for="updateModelo">Modelo:</label>
+                      <input id="updateModelo" class="text-input form-label"  [(ngModel)]="tasacion.modelo" type="text">
+                  </div>
+                  <div class="form-container">
+                      <label class="form-label" for="updatePotencia">Potencia:</label>
+                      <input id="updatePotencia" class="text-input"  [(ngModel)]="tasacion.potencia" type="number">
+                  </div>
+                  <div class="form-container">
+                      <label class="form-label" for="updateFechaMatriculacion">Fecha Matriculacion:</label>
+                      <input id="updateFechaMatriculacion" class="text-input "  [(ngModel)]="tasacion.fecha_matriculacion" type="date">
+                  </div>
+                  <div class="form-container">
+                      <label class="form-label" for="updateTipo">Tipo:</label>
+                      <select id="updateTipo"  [(ngModel)]="tasacion.id_tipo" ng-options="tipo.nombre_tipo for tipo in tipos track by tipo.id_tipo">
+                        <option *ngFor="let tipo of tipos" value="{{tipo.id_tipo}}">{{tipo.nombre_tipo}}</option>
+                      </select>
+                  </div>
+                  <div class="form-container">
+                      <label class="form-label" for="updateCarroceria">Carroceria:</label>
+                      <input id="updateCarroceria" class="text-input "  [(ngModel)]="tasacion.carroceria" type="text">
+                  </div>
+                  <div class="form-container">
+                      <label class="form-label" for="updateCabina">Cabina:</label>
+                      <select id="updateCabina"  [(ngModel)]="tasacion.id_cabina">
+                        <option *ngFor="let cabina of cabinas" value="{{cabina.id_cabina}}">{{cabina.nombre_cabina}}</option>
+                      </select>
+                  </div>
+                  <div class="form-container">
+                      <label class="form-label" for="updateConfiguracion">Configuracion:</label>
+                      <select id="updateConfiguracion"  [(ngModel)]="tasacion.id_configuracion">
+                        <option *ngFor="let configuracion of configuraciones" value="{{configuracion.id_configuracion}}">{{configuracion.nombre_configuracion}}</option>
+                      </select>
+                    </div>
+                  <div class="form-container">
+                      <label class="form-label" for="updateEquipoHidraulico">Equipo Hidraulico:</label>
+                      <input id="updateEquipoHidraulico" class="text-input "  [(ngModel)]="tasacion.hidraulico" type="number">
+                  </div>
+
+
+              </section>
+
+              <section id="tasacion" class="tabcontent">
+
+                  <div class="form-container">
+                      <label class="form-label" for="updateFechaTasacion">Fecha Tasación:</label>
+                      <input id="updateFechaTasacion" class="text-input"  [(ngModel)]="tasacion.fecha" type="date">
+                  </div>
+                  <div class="form-container">
+                      <label class="form-label" for="updateKm">Km:</label>
+                      <input id="updateKm" class="text-input "  [(ngModel)]="tasacion.km" type="number">
+                  </div>
+                  <div class="form-container">
+                      <label class="form-label" for="updateRuedasDelanteras">Ruedas Delanteras:</label>
+                      <select id="updateRuedasDelanteras" [(ngModel)]="tasacion.ruedas_delanteras">
+                        <option *ngFor="let rueda of ruedas" value="{{rueda.id}}">{{rueda.desc}}</option>
+                      </select>
+                    </div>
+                  <div class="form-container">
+                      <label class="form-label" for="updateRuedasTraseras">Ruedas Traseras:</label>
+                      <select id="updateRuedasTraseras" [(ngModel)]="tasacion.ruedas_traseras">
+                        <option *ngFor="let rueda of ruedas" value="{{rueda.id}}">{{rueda.desc}}</option>
+                      </select>
+                    </div>
+                  <div class="form-container" ng-show="permissions.setPreTasacion">
+                      <label class="form-label" for="updatePretasacion">Pretasación:</label>
+                      <input id="updatePretasacion" class="text-input "  [(ngModel)]="tasacion.pretasacion" type="text">
+                  </div>
+                  <div id="demeritosWrapper" class="form-container">
+                      <label for="demerito">Demeritos:</label>
+                      <br>
+                      <select id="demeritos" (change)="assignDemeritoTemporal($event)">
+                        <option *ngFor="let demerito of demeritos" value="{{demerito.valor}}">{{demerito.nombre}}</option>
+                      </select>
+                      <button class="fab newDemerito" (click)="newDemerito()"></button>
+                      <div *ngFor="let demerito of tasacion.demeritos; index as i">
+                          <input type="text" [(ngModel)]="tasacion.demeritos[i].nombre"/>
+                          <input type="number"  [(ngModel)]="tasacion.demeritos[i].valor"/>
+                      </div>
+                  </div>
+
+              </section>
+
+              <div class="updateTasacion">
+
+
+                  <button ion-button class="tasacionForm" (click)="updateTasacion()">
+                      <ion-icon icon="save"></ion-icon> Subir Tasación
+                  </button>
+              </div>
+          </main>
+
+
+
+
+      </div>
+
+
+  </ion-content>
+  

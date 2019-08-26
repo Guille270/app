@@ -1,4 +1,4 @@
-<ion-menu [content]="content" type="overlay">
+<ion-menu [content]="content" type="overlay" side="right">
 
   <ion-header>
     <ion-toolbar>
@@ -8,7 +8,7 @@
 
   <ion-content>
     <ion-list>
-      <button ion-item *ngFor="let p of pages" (click)="openPage(p)">
+      <button ion-item *ngFor="let p of pages" (click)="openPage(p)" right>
         {{p.title}}
       </button>
     </ion-list>

@@ -7,6 +7,11 @@ import { ListPage } from '../pages/list/list';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { AdminTasacionesPage } from '../pages/admin-tasaciones/admin-tasaciones';
+
+import { AdminFilesPage } from '../pages/admin-files/admin-files';
+
+import { LoginPage } from '../pages/login/login';
 
 
 @Component({
@@ -16,7 +21,8 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   // make HelloIonicPage the root (or first) page
-  rootPage = HelloIonicPage;
+  rootPage = LoginPage;
+  //rootPage = AdminFilesPage;
   pages: Array<{title: string, component: any}>;
 
   constructor(
@@ -30,7 +36,9 @@ export class MyApp {
     // set our app's pages
     this.pages = [
       { title: 'Hello Ionic', component: HelloIonicPage },
-      { title: 'My First List', component: ListPage }
+      { title: 'My First List', component: ListPage },
+      { title: 'Admin Tasaciones', component: AdminTasacionesPage },
+      { title: 'Login', component: LoginPage }, 
     ];
   }
 

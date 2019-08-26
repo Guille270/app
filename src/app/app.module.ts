@@ -1,4 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpModule} from '@angular/http';
+
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
@@ -10,15 +12,31 @@ import { ListPage } from '../pages/list/list';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { AdminTasacionesPage } from '../pages/admin-tasaciones/admin-tasaciones';
+import { AddTasacionPage } from '../pages/add-tasacion/add-tasacion';
+import { UpdateTasacionPage } from '../pages/update-tasacion/update-tasacion';
+
+import { AdminFilesPage } from '../pages/admin-files/admin-files';
+
+import { LoginPage } from '../pages/login/login';
+
+
+
 @NgModule({
   declarations: [
     MyApp,
     HelloIonicPage,
     ItemDetailsPage,
-    ListPage
+    ListPage,
+    LoginPage,
+    AdminTasacionesPage,
+    AddTasacionPage,
+    UpdateTasacionPage,
+    AdminFilesPage
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],
@@ -26,7 +44,13 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     MyApp,
     HelloIonicPage,
     ItemDetailsPage,
-    ListPage
+    ListPage,
+    LoginPage,
+    AdminTasacionesPage,
+    AddTasacionPage,
+    UpdateTasacionPage,
+    AdminFilesPage
+    
   ],
   providers: [
     StatusBar,
