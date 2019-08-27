@@ -40,6 +40,12 @@
           </tbody>
       </table>
 
-
+      <div>
+          <ion-grid>
+              <ion-row>
+                  <ion-col col-1 *ngFor="let page of availablePages" (click)="setPageAndGetTasaciones(page)">{{page}} </ion-col>
+              </ion-row>
+          </ion-grid>
+      </div>
   </ion-content>
   

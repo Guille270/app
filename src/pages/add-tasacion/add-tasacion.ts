@@ -37,8 +37,8 @@ export class AddTasacionPage implements OnInit{
   tasacion = {
     "carroceria": "Blanca",
     "demeritos": [],
-    "fecha_tasacion": this.formatDate(),
-    "fecha_matriculacion": "11/10/10",
+    "fecha": this.formatDate(),
+    "fecha_matriculacion": this.formatDate(),
     "hidraulico": "1200",
     "id_cabina": "6",
     "id_configuracion": "1",

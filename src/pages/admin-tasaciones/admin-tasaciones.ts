@@ -23,6 +23,7 @@ export class AdminTasacionesPage implements OnInit {
   sessionStorage = window.sessionStorage;
   selectedTasacion: any
   tasaciones: any
+  availablePages: any
   pagina=1
   resultados=10
 
@@ -30,7 +31,12 @@ export class AdminTasacionesPage implements OnInit {
   }
 
   ngOnInit() {
-    this.getTasacionesPaginated(this.pagina, this.resultados)   
+    this.getTasacionesPaginated(this.pagina, this.resultados)
+  }
+
+  setPageAndGetTasaciones(page) {
+    this.pagina = page
+    this.getTasacionesPaginated(this.pagina,this.resultados)
   }
 
   getTasacionesPaginated = (pagina,resultados) => new Promise((resolve, reject) => {
@@ -47,10 +53,12 @@ export class AdminTasacionesPage implements OnInit {
     
     }).map(res => res.json()).subscribe(
       data => {
-        this.tasaciones = data.tasaciones
+        this.tasaciones = this.convertAllDates(data.tasaciones)
+        this.availablePages = Array.from({length: data.paginas}, (v, k) => k+1); 
         console.log(this.tasaciones)
         this.localStorage.setItem("token",data.token)
         console.log(this.localStorage.getItem("token"))
+        resolve(data)
     },
     err => {
       console.log("GetTasacionesPaginated");
@@ -144,6 +152,31 @@ export class AdminTasacionesPage implements OnInit {
     }
     );
   });
+
+
+  convertAllDates = function (tasaciones) {
+    for (var tasacion of tasaciones) {
+
+        let dates = ["fecha_matriculacion", "fecha"]
+        tasacion[dates[0] + "_europea"] = ""
+        tasacion[dates[1] + "_europea"] = ""
+
+        for (let i = 0; i < dates.length; i++) {
+            if (tasacion[dates[i]] != null && tasacion[dates[i]] != undefined && tasacion[dates[i]] != "0000-00-00" && tasacion[dates[i]].length === 10) {
+                var year = tasacion[dates[i]].split("-")[0];
+                var month = tasacion[dates[i]].split("-")[1];
+                var day = tasacion[dates[i]].split("-")[2];
+
+                tasacion[dates[i] + "_europea"] = day + "-" + month + "-" + year;
+            } else {
+                tasacion[dates[i] + "_europea"] = "---";
+                tasacion[dates[i]] = null;
+            }
+        }
+    }
+    return tasaciones;
+};
+
 
   async presentToast(msg:string) {
     const toast = await this.toastController.create({
