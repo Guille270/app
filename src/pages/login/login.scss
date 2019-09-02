@@ -1,3 +1,15 @@
+ion-header, .header-md::after {
+    background-image: none;
+}
+.toolbar-background-md {
+    background: none;
+}
+.bar-button-menutoggle-md ion-icon {
+    font-size: 4rem;
+}
+.button-md {
+    box-shadow: none;
+}
 page-login .content .scroll-content {
     padding: 15px 30px;
 }
@@ -11,4 +23,14 @@ page-login .content input {
     height: 3.6rem;
     padding: 0px 10px;
     border: 0px;
+}
+page-login .button-md {
+    margin-top: 15px;
+}
+.center__content {
+    width: 100%;
+    text-align: center;
+}
+.center__content img {
+    width: 75%;
 }
