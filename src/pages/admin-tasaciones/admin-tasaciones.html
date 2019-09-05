@@ -11,6 +11,8 @@
       </ion-header>
 
   <ion-content>
+      <input type="text" [(ngModel)]="searchValue">
+      <button (click)="searchTasacionManager()">Search</button>
       <table class="tasaciones">
           <thead>
               <tr>
@@ -23,19 +25,12 @@
               </tr>
           </thead>
           <tbody>
-              <!-- <tr ng-cloak ng-repeat="tasacion in tasaciones | orderBy: '-fecha' | filter:search | filter:advancedSearch | limitTo:selectedOption.value"> -->
               <tr class="zebra" *ngFor="let tasacion of tasaciones; index as i" (click)="selectTasacion(i)">
 
                   <td>{{tasacion.matricula}}</td>
                   <td>{{tasacion.nombre_marca + " " + tasacion.modelo}}</td>
                   <td>{{tasacion.fecha_europea}}</td>
                   <td class="p2">{{tasacion.fecha_matriculacion_europea}}</td>
-                  <!--
-                      <td>{{convertAllDates(tasacion.fecha)}}</td>
-                      <td class="p2">{{convertAllDates(tasacion.fecha_matriculacion)}}</td>
-                      -->
-
-
               </tr>
           </tbody>
       </table>

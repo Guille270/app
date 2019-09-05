@@ -26,6 +26,7 @@ export class AdminTasacionesPage implements OnInit {
   availablePages: any
   pagina=1
   resultados=10
+  searchValue:string
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http:Http, public actionSheet: ActionSheetController,public toastController:ToastController) {
   }
@@ -144,6 +145,46 @@ export class AdminTasacionesPage implements OnInit {
     },
     err => {
       console.log(err);
+
+      if (err.status == 401 || err.status == 403) {
+        this.localStorage.setItem("token","")
+        this.navCtrl.setRoot(LoginPage);
+      }
+    }
+    );
+  });
+
+  searchTasacionManager = () => {
+    if (this.searchValue === null || this.searchValue === undefined || this.searchValue === "") {
+      this.getTasacionesPaginated(this.pagina,this.resultados)
+    } else {
+      this.searchTasacion()
+    }
+  }
+
+ searchTasacion = () => new Promise((resolve, reject) => {
+    let customHeaders = new Headers();
+    customHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
+    customHeaders.append('Authorization', 'Bearer ' + this.localStorage.getItem('token'))
+
+    this.http.get('http://agontruckcenterzaragoza.com/intranet/api/tasaciones/search',{
+      params: {
+        "value":this.searchValue,
+      },
+      headers:customHeaders
+    
+    }).map(res => res.json()).subscribe(
+      data => {
+        this.tasaciones = this.convertAllDates(data.tasaciones)
+        this.availablePages = [1]
+        console.log(this.tasaciones)
+        this.localStorage.setItem("token",data.token)
+        console.log(this.localStorage.getItem("token"))
+        resolve(data)
+    },
+    err => {
+      console.log("searchTasacion");
+      console.log(err)
 
       if (err.status == 401 || err.status == 403) {
         this.localStorage.setItem("token","")

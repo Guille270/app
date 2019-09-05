@@ -10,18 +10,29 @@ import { AdminTasacionesPage } from '../admin-tasaciones/admin-tasaciones';
   selector: 'page-login',
   templateUrl: 'login.html'
 })
-export class LoginPage {
-  storage = window.localStorage;
+export class LoginPage implements OnInit {
+  localStorage = window.localStorage;
   email: String;
   password: String;
   token:string
+  rememberCredentials:boolean
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http:Http) {
   }
 
+  ngOnInit() {
+    
+    if (this.localStorage.getItem("credentials") != null && this.localStorage.getItem("credentials") != undefined && this.localStorage.getItem("credentials") != "") {
+      let credentials = JSON.parse(this.localStorage.getItem("credentials"))
+      this.email = credentials.email
+      this.password = credentials.password
+      this.rememberCredentials = true;
+    } else {
+      this.rememberCredentials = false;
+    }
+  }
+
   loginRequest() {
-    console.log("Email " + this.email)
-    console.log("Password " +this.password)
 
     let customHeaders = new Headers();
     customHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -35,14 +46,24 @@ export class LoginPage {
     
     }).map(res => res.json()).subscribe(
       data => {
-        this.storage.setItem("token",data.token)
-        console.log(this.storage.getItem("token"))
+        this.localStorage.setItem("token",data.token)
+        console.log(this.localStorage.getItem("token"))
         this.navCtrl.setRoot(AdminTasacionesPage);
     },
     err => {
       console.log("error");
     }
     );
+  }
+
+  updateRememberCredentialsOptions() {
+    console.log(this.rememberCredentials)
+    if (this.rememberCredentials) {
+      let credentials = {"email":this.email,"password":this.password}
+      this.localStorage.setItem("credentials",JSON.stringify(credentials))
+    } else {
+      this.localStorage.removeItem("credentials","")
+    }
   }
 
 
